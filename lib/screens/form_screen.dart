@@ -1,5 +1,7 @@
 import 'package:actividad_integradora_1/models/product_model.dart';
 import 'package:actividad_integradora_1/screens/detail_screen.dart';
+import 'package:actividad_integradora_1/widgets/campo_widget.dart';
+//import 'package:actividad_integradora_1/widgets/campo_widget.dart';
 import 'package:flutter/material.dart';
 
 class FormScreen extends StatefulWidget {
@@ -22,6 +24,7 @@ class _FormScreenState extends State<FormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String etiqueta;
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.computer),
@@ -89,56 +92,38 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                   SizedBox(height: 10),
 
-                  TextField(
-                    controller: _codController,
-                    decoration: InputDecoration(
-                      labelText: 'Código',
-                      hintText: 'Ingrese el código',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.tag),
-                      border: OutlineInputBorder(),
-                    ),
+                  CampoTexto( 
+                    etiqueta: 'Código.',
+                    textoAyuda: 'Ingrese el código', 
+                    controller: _codController, 
+                    icono: Icons.tag
                   ),
-
                   SizedBox(height: 10),
 
-                  TextField(
-                    controller: _nomController,
-                    decoration: InputDecoration(
-                      labelText: 'Nombre:',
-                      hintText: 'Ingrese el nombre del producto',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.memory),
-                      border: OutlineInputBorder(),
-                    ),
+                  CampoTexto(
+                    etiqueta: 'Nombre', 
+                    textoAyuda: 'Ingrese nombre del producto', 
+                    controller: _nomController, 
+                    icono: Icons.memory
                   ),
-
                   SizedBox(height: 10),
 
-                  TextField(
-                    controller: _canController,
-                    decoration: InputDecoration(
-                      labelText: 'Cantidad:',
-                      hintText: '0',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.inventory_2_outlined),
-                      border: OutlineInputBorder(),
-                    ),
+                  CampoTexto(
+                    etiqueta: 'Cantidad:', 
+                    textoAyuda: '0', 
+                    controller: _canController, 
+                    icono: Icons.inventory_2_outlined,
+                    tipoTeclado: TextInputType.number,
                   ),
-
                   SizedBox(height: 10),
 
-                  TextField(
-                    controller: _preController,
-                    decoration: InputDecoration(
-                      labelText: 'Precio:',
-                      hintText: '0.00',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.attach_money),
-                      border: OutlineInputBorder(),
-                    ),
+                  CampoTexto(
+                    etiqueta: 'Precio:', 
+                    textoAyuda: '0.00', 
+                    controller: _preController, 
+                    icono: Icons.attach_money,
+                    tipoTeclado: TextInputType.numberWithOptions(decimal: true),
                   ),
-
                   SizedBox(height: 10),
 
                   TextFormField(
