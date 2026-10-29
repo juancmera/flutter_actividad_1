@@ -1,4 +1,4 @@
-import 'package:actividad_integradora_1/screens/form_screen.dart';
+import 'package:actividad_integradora_1/rutes/app_routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +16,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FormScreen (),
+      //home: FormScreen (),
+
+      //Rutas
+      initialRoute: AppRoutes.inicio,
+      routes: AppRoutes.rutas,
+
 
     );
   }

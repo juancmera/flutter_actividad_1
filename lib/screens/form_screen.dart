@@ -1,4 +1,5 @@
 import 'package:actividad_integradora_1/models/product_model.dart';
+import 'package:actividad_integradora_1/rutes/app_routes.dart';
 import 'package:actividad_integradora_1/screens/detail_screen.dart';
 import 'package:actividad_integradora_1/widgets/campo_widget.dart';
 //import 'package:actividad_integradora_1/widgets/campo_widget.dart';
@@ -183,7 +184,7 @@ class _FormScreenState extends State<FormScreen> {
                           descripcion: _desController.text,
                         );
 
-                        Navigator.push(
+                        /*Navigator.push(
                           context, 
                           MaterialPageRoute(
                             //Pasa los datos del form a la segunda pantalla
@@ -191,6 +192,11 @@ class _FormScreenState extends State<FormScreen> {
                               componenteRecibido: nuevoComponente,
                             ),
                           ),
+                        );*/
+
+                        Navigator.pushNamed(
+                          context, AppRoutes.detalle, 
+                          arguments: nuevoComponente
                         );
 
                         
