@@ -1,4 +1,4 @@
-package com.example.actividad_integradora_1
+package ec.jcmera.techstore
 
 import io.flutter.embedding.android.FlutterActivity
 

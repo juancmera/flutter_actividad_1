@@ -86,7 +86,7 @@ class DetailScreen extends StatelessWidget {
                         Icon(Icons.inventory_2_outlined, size: 20, color: Colors.blueGrey),
                         SizedBox(width: 8),
                         Text(
-                          componenteRecibido.precio,
+                          componenteRecibido.cantidad,
                           style: TextStyle(fontSize: 16),
                         ),
                       ],
@@ -98,7 +98,7 @@ class DetailScreen extends StatelessWidget {
                         Icon(Icons.attach_money, size: 20, color: Colors.blueGrey),
                         SizedBox(width: 8),
                         Text(
-                          componenteRecibido.cantidad,
+                          componenteRecibido.precio,
                           style: TextStyle(fontSize: 16),
                         ),
                       ],

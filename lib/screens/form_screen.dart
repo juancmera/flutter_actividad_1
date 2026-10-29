@@ -24,7 +24,7 @@ class _FormScreenState extends State<FormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String etiqueta;
+    //String etiqueta;
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.computer),
@@ -100,6 +100,8 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                   SizedBox(height: 10),
 
+                  // Resto campos del formulario
+
                   CampoTexto(
                     etiqueta: 'Nombre', 
                     textoAyuda: 'Ingrese nombre del producto', 
@@ -151,16 +153,23 @@ class _FormScreenState extends State<FormScreen> {
                   SizedBox(
                     width: double.infinity,
                     height: 48,
-                    child: ElevatedButton(
+                    child: 
+                    
+                    ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green.shade600,
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () {
                         // validación
-                        if (_codController.text.isEmpty ||_nomController.text.isEmpty ) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Completa los campos')),  
+                        if (_codController.text.isEmpty ||
+                            _nomController.text.isEmpty ||
+                            _canController.text.isEmpty ||
+                            _preController.text.isEmpty ||
+                            _desController.text.isEmpty
+                            ) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Completa todos los campos')),  
                           );
                           return;
                         }
@@ -183,6 +192,8 @@ class _FormScreenState extends State<FormScreen> {
                             ),
                           ),
                         );
+
+                        
                       },
 
                       child: Row(
