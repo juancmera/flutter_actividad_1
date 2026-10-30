@@ -1,4 +1,5 @@
 import 'package:actividad_integradora_1/rutes/app_routes.dart';
+import 'package:actividad_integradora_1/theme/tema.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,9 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: techStoreTheme(),
       //home: FormScreen (),
 
       //Rutas
