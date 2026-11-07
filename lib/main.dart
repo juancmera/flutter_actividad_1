@@ -1,9 +1,18 @@
-import 'package:actividad_integradora_1/rutes/app_routes.dart';
+import 'package:actividad_integradora_1/models/product_model.dart';
+import 'package:actividad_integradora_1/providers/product_provider.dart';
+import '../screens/screens.dart';
 import 'package:actividad_integradora_1/theme/tema.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ProductosProvider(),
+      child: const MyApp(),
+    )
+  
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,16 +21,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'TechStore',
       debugShowCheckedModeBanner: false,
       theme: techStoreTheme(),
       //home: FormScreen (),
 
       //Rutas
-      initialRoute: AppRoutes.inicio,
-      routes: AppRoutes.rutas,
-
-
+      initialRoute: 'inicio',
+      routes: {
+        'inicio': (_) => HomeScreen(),
+        'catalogo': (_) => const CatalogoScreen(),
+        'registro': (_) => const FormScreen(),
+        'detalle': (context) => DetailScreen(
+          componenteRecibido:
+              ModalRoute.of(context)!.settings.arguments as Componentes,
+        ),
+      },
     );
   }
 }
