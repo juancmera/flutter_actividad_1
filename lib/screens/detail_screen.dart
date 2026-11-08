@@ -127,8 +127,7 @@ class DetailScreen extends StatelessWidget {
                                       TechStoreRadius.full,
                                     ),
                                   ),
-                                  // NUEVO: ${...} inserta una variable en el texto;
-                                  // monospace = letra de ancho fijo.
+                                  // inserta una variable en el texto;
                                   child: Text(
                                     '# ${componenteRecibido.codigo}',
                                     style: TextStyle(
@@ -143,8 +142,6 @@ class DetailScreen extends StatelessWidget {
                         ],
                       ),
  
-                      // NUEVO: Divider dibuja una línea horizontal; height es el
-                      // espacio total que ocupa (línea + espacio arriba y abajo).
                       Divider(height: 28, color: TechStoreColors.border),
  
                       // Cantidad y Precio en dos columnas iguales
@@ -161,8 +158,7 @@ class DetailScreen extends StatelessWidget {
                             child: DatoDetalle(
                               icono: Icons.attach_money,
                               etiqueta: 'PRECIO UNITARIO',
-                              // NUEVO: toStringAsFixed(2) = siempre 2 decimales;
-                              // \$ escribe el símbolo sin confundirlo con variable.
+                              // siempre 2 decimales;
                               valor: '\$ ${precio.toStringAsFixed(2)}',
                             ),
                           ),
@@ -178,7 +174,7 @@ class DetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(TechStoreRadius.sm),
                         ),
                         child: Row(
-                          // NUEVO: spaceBetween = uno a la izquierda y otro a la derecha
+                          // alinea uno a la izquierda y otro a la derecha
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
@@ -216,13 +212,8 @@ class DetailScreen extends StatelessWidget {
             ),
           ),
 
-
-           
-          // =====================================================
           // BOTONES FIJOS ABAJO
-          // =====================================================
-          // NUEVO: SafeArea evita que los botones queden debajo de la
-          // barra de gestos o de los botones del sistema del teléfono.
+
           SafeArea(
             top: false, // solo protege el borde inferior
             child: Padding(
@@ -240,8 +231,7 @@ class DetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(TechStoreRadius.md),
                         ),
                       ),
-                      // NUEVO: Navigator.pop cierra esta pantalla y vuelve
-                      // a la anterior (FormScreen).
+                      // cierra esta pantalla y vuelve a la anterior (FormScreen).
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -267,10 +257,7 @@ class DetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(TechStoreRadius.md),
                         ),
                       ),
-                      // NUEVO: popUntil cierra pantallas hasta llegar a la que
-                      // cumple la condición; isFirst = la primera de la app.
-                      // Hoy equivale a pop (solo hay 2 pantallas), pero sirve
-                      // cuando se agregue la pantalla de inventario.
+
                       onPressed: () {
                         Navigator.popUntil(context, (route) => route.isFirst);
                       },

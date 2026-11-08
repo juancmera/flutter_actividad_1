@@ -1,7 +1,9 @@
 import 'package:actividad_integradora_1/models/product_model.dart';
 import 'package:actividad_integradora_1/rutes/app_routes.dart';
 import 'package:actividad_integradora_1/theme/tema.dart';
+import 'package:actividad_integradora_1/widgets/appbar_widget.dart';
 import 'package:actividad_integradora_1/widgets/campo_widget.dart';
+import 'package:actividad_integradora_1/widgets/menu_widget.dart';
 import 'package:flutter/material.dart';
 
 class FormScreen extends StatefulWidget {
@@ -36,42 +38,8 @@ class _FormScreenState extends State<FormScreen> {
   Widget build(BuildContext context) {
     //String etiqueta;
     return Scaffold(
-      
-      appBar: AppBar(
-        backgroundColor: TechStoreColors .navy900,
-        foregroundColor: TechStoreColors.card,
-        leading: Center(
-          child: Container(
-            width: 38,
-            height: 38,
-            decoration: BoxDecoration(
-              gradient: TechStoreColors.goldGradient, //fondo con degradado
-              borderRadius: BorderRadius.circular(TechStoreRadius.sm),
-              
-            ),
-            child: Icon(
-              Icons.laptop_outlined,
-              color: TechStoreColors.navy900,
-              size: 22,
-            ),
-          ),
-        ),
-        //titleSpacing es el espacio entre el leading y el título.
-        titleSpacing: 0,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'TechStore',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Componentes de PC',
-              style: TextStyle(fontSize: 12, color: TechStoreColors.muted),
-            ),
-          ],
-        ),
-      ),
+      appBar: const BarraDefault(),
+      drawer: const MenuLateral(),
  
       body: ListView(
         padding: EdgeInsets.all(16),
@@ -297,7 +265,7 @@ class _FormScreenState extends State<FormScreen> {
                                 ),
                               );*/
                               Navigator.pushNamed(
-                                context, AppRoutes .detalle, 
+                                context, AppRoutes.detalle, 
                                 arguments: nuevoComponente
                               );
 

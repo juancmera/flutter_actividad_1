@@ -1,4 +1,5 @@
 import 'package:actividad_integradora_1/models/product_model.dart';
+import 'package:actividad_integradora_1/theme/tema.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ const CardSwiper({
   @override
   Widget build(BuildContext context) {
     return  Container(
-      color: Colors.blueGrey,
+      color: TechStoreColors.amberBg,
       width: double.infinity,
       height: size.height * .5,
 
@@ -48,12 +49,12 @@ const CardSwiper({
                       child: FadeInImage(
                         width: double.infinity,
                         fit: BoxFit.contain, // no recorta el producto
-                        placeholder: const AssetImage('assets/img/logo_.png'),
+                        placeholder: AssetImage('assets/img/logo.png'),
                         image: NetworkImage(producto.imagen),
                         // NUEVO — si la imagen falla, muestra el logo
                         // en lugar de romper el carrusel.
                         imageErrorBuilder: (_, _, _) =>
-                            Image.asset('assets/img/logo_.png'),
+                            Image.asset('assets/img/logo.png'),
                       ),
                     ),
                     Padding(

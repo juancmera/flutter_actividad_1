@@ -24,7 +24,6 @@ const HomeScreen({super.key});
       body: RefreshIndicator(
         onRefresh: provider.cargarProductos,
 
-        // contenido
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
           children: [
@@ -37,8 +36,7 @@ const HomeScreen({super.key});
 
   Widget _contenido(
       BuildContext context, ProductosProvider provider, Size size) {
-    // ---- Estado CARGANDO ----
-    // spinner si aún no hay datos y si ya hay productos (Pull-to-Refresh.
+    // spinner de carga
     if (provider.cargando && provider.productos.isEmpty) {
       return SizedBox(
         height: size.height * 0.7,
@@ -46,18 +44,18 @@ const HomeScreen({super.key});
       );
     }
 
-    // ---- Estado ERROR ----
+    //Estado ERROR
     if (provider.error != null) {
       return SizedBox(
         height: size.height * 0.7,
         child: VistaError (
-          mensaje: provider.error!, // "!" : aquí sabemos que no es null
+          mensaje: provider.error!,
           onReintentar: provider.cargarProductos,
         ),
       );
     }
 
-    // ---- Estado ÉXITO ----
+    //Estado ÉXITO
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -72,7 +70,6 @@ const HomeScreen({super.key});
         const SizedBox(height: 20),
         Center(
           child: ElevatedButton.icon(
-            // Navegación a Catálogo
             onPressed: () => Navigator.pushNamed(context, 'catalogo'),
             icon: const Icon(Icons.grid_view),
             label: Text('Ver catálogo (${provider.productos.length})'),

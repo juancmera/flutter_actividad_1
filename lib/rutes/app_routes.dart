@@ -6,15 +6,17 @@ import '../screens/screens.dart';
 class AppRoutes {
   // nombre rudas
   static const String inicio = '/';
+  static const String catalogo = '/catalogo';
   static const String registro = '/registro';
-  static const String detalle = '/detalle';
+  static const String detalle = 'detalle';
 
   //mapa rutas
   static final Map<String, WidgetBuilder> rutas = {
     inicio: (context) => FormScreen (),
+    catalogo: (context) => CatalogoScreen(),
     registro: (context) => FormScreen(),
 
-    //pasar el objeto utilizando componenteRecibido
+    //objeto utilizando componenteRecibido
     detalle: (context) {
       final componenteRecibido =
         ModalRoute.of(context)!.settings.arguments as Componentes;

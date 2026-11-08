@@ -16,7 +16,7 @@ const ProductoCard({
 
     return  Card(
       elevation: 3,
-      // clipBehavior recorta la imagen con las esquinas redondeadas del Card
+
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Column(
@@ -28,10 +28,10 @@ const ProductoCard({
               width: double.infinity,
               child: FadeInImage(
                 fit: BoxFit.contain,
-                placeholder: const AssetImage('assets/images/logo_.png'),
+                placeholder: AssetImage('assets/img/logo.png'),
                 image: NetworkImage(producto.imagen),
                 imageErrorBuilder: (_, _, _) =>
-                    Image.asset('assets/images/logo_.png'),
+                    Image.asset('assets/img/logo.png'),
               ),
             ),
           ),
