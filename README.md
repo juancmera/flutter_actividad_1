@@ -1,6 +1,6 @@
 # EcoTech – Componentes de PC
 
-Aplicación móvil desarrollada en **Flutter** para la asignatura **Desarrollo de Aplicaciones Móviles** de la Carrera de Ingeniería en Sistemas de la Universidad ECOTEC.
+Aplicación móvil desarrollada en **Flutter** para la asignatura **Desarrollo de Aplicaciones Móviles** de la Carrera de Ingeniería en Sistemas Inteligentes de la Universidad ECOTEC.
 
 **Actividad Integradora 3:** consumo de una API REST pública y gestión de estados con **Provider**.
 
@@ -49,7 +49,7 @@ Las tres categorías se descargan **en paralelo** (`Future.wait`) y se unen en u
 
 ##  Funcionalidades
 
-- **Home:** carrusel con los 5 productos mejor valorados (`rating`).
+- **Home:** carrusel con 5 productos mejor valorados (`rating`).
 - **Catálogo:** grilla de productos con filtros por categoría (Todos, Laptops, Tablets y Accesorios).
 - **Tres estados de la petición:**
   - **Cargando:** indicador de progreso.
@@ -103,7 +103,7 @@ Las pantallas **no importan el paquete `http`**: solo escuchan al Provider con `
 
 ---
 
-## ▶️ Cómo ejecutar la aplicación
+## Ejecución de la aplicación
 
 ### Requisitos
 
