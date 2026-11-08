@@ -1,73 +1,165 @@
-# EcoTech – Registro de componentes de PC
+# EcoTech – Componentes de PC
 
-Prototipo interactivo (MVP) de una aplicación de catálogo de productos desarrollado en Flutter para la **Actividad Integradora 1** de la asignatura **Desarrollo de Aplicaciones Móviles**, Carrera de Ingeniería en Sistemas Inteligentes, Universidad ECOTEC.
+Aplicación móvil desarrollada en **Flutter** para la asignatura **Desarrollo de Aplicaciones Móviles** de la Carrera de Ingeniería en Sistemas de la Universidad ECOTEC.
 
-La aplicación permite registrar un componente de PC en un formulario y enviar sus datos a una segunda pantalla, donde se muestran en detalle.
+**Actividad Integradora 3:** consumo de una API REST pública y gestión de estados con **Provider**.
 
-## Funcionalidades
+## API pública consumida
 
-- **Pantalla 1 – `FormScreen`**: formulario para ingresar código, nombre, cantidad, precio y descripción del componente.
-  - Validación al presionar **Guardar**: si algún campo está vacío, se muestra el mensaje "Completa todos los campos".
-  - Teclado numérico para cantidad y teclado decimal para precio.
-  - Descripción multilínea con límite de 150 caracteres.
-- **Pantalla 2 – `DetailScreen`**: muestra los datos recibidos dentro de un `Card`.
-  - Botón **Registrar otro componente** para regresar al formulario.
-- **Navegación multipantalla** con `Navigator.push` y `Navigator.pop`.
-- **Paso de parámetros** mediante el constructor de `DetailScreen`, usando un objeto del modelo `Componentes`.
-
-## Estructura principal
-
-| Archivo / clase | Descripción |
+| Elemento | Detalle |
 |---|---|
-| `product_model.dart` | Clase modelo `Componentes` que agrupa los datos del producto. |
-| `campo_widgets.dart` | Widget reutilizable `CampoTexto` (etiqueta, texto de ayuda, controlador, ícono y tipo de teclado). |
-| `FormScreen` | `StatefulWidget` con el formulario, los controladores y el botón Guardar. |
-| `DetailScreen` | `StatelessWidget` que recibe el parámetro `componenteRecibido`. |
-| `assets/img/` | Imágenes de la aplicación. |
+| **API** | [DummyJSON](https://dummyjson.com) (API REST pública de datos de prueba) |
+| **Endpoint** | `GET https://dummyjson.com/products/category/{categoria}` |
+| **Categorías** | `laptops`, `tablets`, `mobile-accessories` |
+| **Autenticación** | No requiere token, API key ni registro |
+| **Formato** | JSON |
 
-## Paso de parámetros
+Ejemplo de petición:
 
-```dart
-// Pantalla 1: se crea el objeto y se envía
-Componentes nuevoComponente = Componentes(
-  codigo: _codController.text,
-  nombre: _nomController.text,
-  cantidad: _canController.text,
-  precio: _preController.text,
-  descripcion: _desController.text,
-);
-
-Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => DetailScreen(componenteRecibido: nuevoComponente),
-  ),
-);
-
-// Pantalla 2: se recibe por constructor
-final Componentes componenteRecibido;
-const DetailScreen({super.key, required this.componenteRecibido});
+```
+https://dummyjson.com/products/category/laptops
 ```
 
-## Requisitos
+Estructura de la respuesta (campos utilizados):
 
-- Flutter 3.47.5 (canal stable)
-- Dart 3.13.4
-- Entorno verificado con `flutter doctor -v` (sin problemas)
-
-## Ejecución
-
-```bash
-git clone https://github.com/juancmera/flutter_actividad_1.git
-cd flutter_actividad_1
-flutter pub get
-flutter run
+```json
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "...",
+      "description": "...",
+      "category": "laptops",
+      "price": 0.0,
+      "rating": 0.0,
+      "stock": 0,
+      "brand": "...",
+      "thumbnail": "https://..."
+    }
+  ],
+  "total": 0,
+  "skip": 0,
+  "limit": 0
+}
 ```
 
-## Declaración de uso de IA
+Las tres categorías se descargan **en paralelo** (`Future.wait`) y se unen en un solo catálogo.
 
-Se utilizó el asistente de IA Claude (Anthropic) como guía sobre el envío de parámetros entre pantallas: el cambio de `FormScreen` a `StatefulWidget`, la creación del objeto `nuevoComponente`, su envío en el `builder` de `MaterialPageRoute` y la recepción en el constructor de `DetailScreen`. El resto del código fue desarrollado en base a las clases de la asignatura.
+---
+
+##  Funcionalidades
+
+- **Home:** carrusel con los 5 productos mejor valorados (`rating`).
+- **Catálogo:** grilla de productos con filtros por categoría (Todos, Laptops, Tablets y Accesorios).
+- **Tres estados de la petición:**
+  - **Cargando:** indicador de progreso.
+  - **Éxito:** muestra los productos.
+  - **Error:** mensaje claro y botón **Reintentar** si no hay conexión.
+- **Pull-to-Refresh:** desliza hacia abajo para actualizar los datos.
+- **Menú lateral (Drawer)** para navegar entre pantallas.
+- Límite de espera (*timeout*) de 10 segundos y validación del código HTTP 200.
+
+---
+
+## Arquitectura
+
+La lógica de red está separada de la interfaz en tres capas:
+
+```
+DummyJSON ──GET──► Servicio ──► Provider ──► Pantallas
+                (http + JSON)  (estados)    (solo muestran)
+```
+
+```
+lib/
+├── models/
+│   └── product_model.dart        # Modelo con fromJson / toJson
+├── services/
+│   └── product_service.dart     # Peticiones HTTP a la API
+├── providers/
+│   └── product_provider.dart    # Estados: Cargando, Éxito y Error (ChangeNotifier)
+├── screens/
+│   ├── home_screen.dart           # Carrusel de destacados
+│   └── catalogo_screen.dart       # Grilla con filtros
+├── widgets/
+│   ├── card_swiper.dart
+│   ├── producto_widget.dart
+│   ├── error_widget.dart
+│   └── menu_widget.dart
+└── main.dart                      # Registro del Provider y rutas
+```
+
+Las pantallas **no importan el paquete `http`**: solo escuchan al Provider con `context.watch` y se redibujan cuando cambia el estado.
+
+---
+
+## Dependencias principales
+
+| Paquete | Uso |
+|---|---|
+| [`http`](https://pub.dev/packages/http) | Peticiones GET a la API |
+| [`provider`](https://pub.dev/packages/provider) | Gestión de estado |
+| [`card_swiper`](https://pub.dev/packages/card_swiper) | Carrusel del Home |
+
+---
+
+## ▶️ Cómo ejecutar la aplicación
+
+### Requisitos
+
+- Flutter SDK instalado (`flutter --version`)
+- Un emulador Android/iOS o un dispositivo físico conectado
+- Conexión a internet
+
+### Pasos
+
+1. **Clonar el repositorio**
+   ```bash
+   git clone https://github.com/juancmera/flutter_actividad_1.git
+   cd flutter_actividad_1
+   ```
+
+2. **Cambiar a la rama de esta actividad** (si aún no está fusionada)
+   ```bash
+   git checkout feature/api-integration
+   ```
+
+3. **Instalar las dependencias**
+   ```bash
+   flutter pub get
+   ```
+
+4. **Verificar que hay un dispositivo disponible**
+   ```bash
+   flutter devices
+   ```
+
+5. **Ejecutar la app**
+   ```bash
+   flutter run
+   ```
+
+> **Nota (Android):** el permiso de Internet ya está configurado en `android/app/src/main/AndroidManifest.xml`:
+> ```xml
+> <uses-permission android:name="android.permission.INTERNET"/>
+> ```
+
+---
+
+## Cómo probar los estados
+
+| Estado | Cómo verlo |
+|---|---|
+| **Cargando** | Al abrir la app, mientras llegan los datos |
+| **Éxito** | Con conexión a internet: aparecen el carrusel y el catálogo |
+| **Error** | Activa el **modo avión** y desliza hacia abajo para actualizar |
+| **Recuperación** | Desactiva el modo avión y pulsa **Reintentar** |
+
+---
+
+## Documentación
+
+El informe técnico de la actividad está en [`docs/Informe_AI3.pdf`](docs/Informe_AI3.pdf).
 
 ## Autor
-
 Juan Cristóbal Mera Vásquez – Universidad ECOTEC, 2026
